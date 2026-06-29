@@ -21,6 +21,7 @@
   --gdpr-ca-fs-msg: 14px;
   --gdpr-ca-fs-btn: 14px;
   --gdpr-ca-align: center;
+  --gdpr-ca-offset: 20px;
 }
 
 body > .gdpr-ca-backdrop,
@@ -56,6 +57,7 @@ body #gdpr-ca-banner {
   visibility: visible !important;
   opacity: 1 !important;
   transform-origin: center center !important;
+  pointer-events: auto !important;
 }
 
 body #gdpr-ca-banner * {
@@ -72,12 +74,12 @@ body #gdpr-ca-banner.gdpr-ca-banner--bar {
 }
 
 body #gdpr-ca-banner.gdpr-ca-banner--bar.gdpr-ca-banner--bottom {
-  bottom: 20px !important;
+  bottom: var(--gdpr-ca-offset, 20px) !important;
   top: auto !important;
 }
 
 body #gdpr-ca-banner.gdpr-ca-banner--bar.gdpr-ca-banner--top {
-  top: 20px !important;
+  top: var(--gdpr-ca-offset, 20px) !important;
   bottom: auto !important;
 }
 
@@ -102,12 +104,12 @@ body #gdpr-ca-banner.gdpr-ca-banner--widget {
 }
 
 body #gdpr-ca-banner.gdpr-ca-banner--widget.gdpr-ca-banner--bottom {
-  bottom: 20px !important;
+  bottom: var(--gdpr-ca-offset, 20px) !important;
   top: auto !important;
 }
 
 body #gdpr-ca-banner.gdpr-ca-banner--widget.gdpr-ca-banner--top {
-  top: 20px !important;
+  top: var(--gdpr-ca-offset, 20px) !important;
   bottom: auto !important;
 }
 
@@ -121,6 +123,7 @@ body .gdpr-ca-backdrop.gdpr-ca-banner--hidden {
 body #gdpr-ca-banner .gdpr-ca-banner__inner {
   padding: var(--gdpr-ca-pt) var(--gdpr-ca-pr) var(--gdpr-ca-pb) var(--gdpr-ca-pl) !important;
   box-sizing: border-box !important;
+  pointer-events: auto !important;
 }
 
 /* Head */
@@ -198,6 +201,9 @@ body #gdpr-ca-banner .gdpr-ca-btn {
   box-shadow: none !important;
   margin: 0 !important;
   text-shadow: none !important;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 body #gdpr-ca-banner .gdpr-ca-btn:hover {

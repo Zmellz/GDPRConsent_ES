@@ -91,8 +91,18 @@ class GdprCa_Public {
                 $radius           = max( 0, min( 32, absint( gdpr_ca_get_setting( 'banner_radius', 18 ) ) ) );
                 $max_width        = max( 320, min( 1600, absint( gdpr_ca_get_setting( 'banner_max_width', 1040 ) ) ) );
 
+                $offset      = max( 0, min( 80, absint( gdpr_ca_get_setting( 'banner_offset', 20 ) ) ) );
+                $pt          = absint( gdpr_ca_get_setting( 'banner_padding_top', 24 ) );
+                $pr          = absint( gdpr_ca_get_setting( 'banner_padding_right', 24 ) );
+                $pb          = absint( gdpr_ca_get_setting( 'banner_padding_bottom', 24 ) );
+                $pl          = absint( gdpr_ca_get_setting( 'banner_padding_left', 24 ) );
+                $fs_title    = absint( gdpr_ca_get_setting( 'font_size_title', 20 ) );
+                $fs_msg      = absint( gdpr_ca_get_setting( 'font_size_message', 14 ) );
+                $fs_btn      = absint( gdpr_ca_get_setting( 'font_size_buttons', 14 ) );
+                $align       = gdpr_ca_get_setting( 'banner_text_align', 'center' );
+
                 $custom_css = sprintf(
-                        '#gdpr-ca-banner{--gdpr-ca-primary:%1$s;--gdpr-ca-accent:%2$s;--gdpr-ca-bg:%3$s;--gdpr-ca-text:%4$s;--gdpr-ca-muted:%5$s;--gdpr-ca-border:%6$s;--gdpr-ca-button-text:%7$s;--gdpr-ca-radius:%8$spx;--gdpr-ca-max-width:%9$spx;} .gdpr-ca-backdrop{z-index:99998;}',
+                        '#gdpr-ca-banner{--gdpr-ca-primary:%1$s;--gdpr-ca-accent:%2$s;--gdpr-ca-bg:%3$s;--gdpr-ca-text:%4$s;--gdpr-ca-muted:%5$s;--gdpr-ca-border:%6$s;--gdpr-ca-button-text:%7$s;--gdpr-ca-radius:%8$spx;--gdpr-ca-max-width:%9$spx;--gdpr-ca-offset:%10$spx;--gdpr-ca-pt:%11$spx;--gdpr-ca-pr:%12$spx;--gdpr-ca-pb:%13$spx;--gdpr-ca-pl:%14$spx;--gdpr-ca-fs-title:%15$spx;--gdpr-ca-fs-msg:%16$spx;--gdpr-ca-fs-btn:%17$spx;--gdpr-ca-align:%18$s;} .gdpr-ca-backdrop{z-index:99998;}',
                         esc_attr( $primary ),
                         esc_attr( $accent ),
                         esc_attr( $background_color ),
@@ -101,7 +111,16 @@ class GdprCa_Public {
                         esc_attr( $border_color ),
                         esc_attr( $button_text ),
                         $radius,
-                        $max_width
+                        $max_width,
+                        $offset,
+                        $pt,
+                        $pr,
+                        $pb,
+                        $pl,
+                        $fs_title,
+                        $fs_msg,
+                        $fs_btn,
+                        esc_attr( $align )
                 );
 
                 wp_register_style(
@@ -547,6 +566,7 @@ class GdprCa_Public {
                         . '--gdpr-ca-button-text:' . esc_attr( $btn_text_rgba ) . ';'
                         . '--gdpr-ca-radius:' . $radius . 'px;'
                         . '--gdpr-ca-max-width:' . $max_width . 'px;'
+                        . '--gdpr-ca-offset:' . $offset . 'px;'
                         . '--gdpr-ca-pt:' . $pt . 'px;--gdpr-ca-pr:' . $pr . 'px;--gdpr-ca-pb:' . $pb . 'px;--gdpr-ca-pl:' . $pl . 'px;'
                         . '--gdpr-ca-fs-title:' . $fs_title . 'px;--gdpr-ca-fs-msg:' . $fs_msg . 'px;--gdpr-ca-fs-btn:' . $fs_btn . 'px;'
                         . '--gdpr-ca-align:' . esc_attr( $align ) . ';';
