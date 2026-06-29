@@ -136,16 +136,17 @@
     var path = cfg.cookiePath || '/';
     var domain = cfg.cookieDomain || '';
     var expires = 'expires=Thu, 01 Jan 1970 00:00:00 GMT';
-    var base = name + '=; ' + expires + '; Max-Age=0; path=' + path + '; SameSite=Lax';
+    var secure = location.protocol === 'https:' ? '; Secure' : '';
+    var base = name + '=; ' + expires + '; Max-Age=0; path=' + path + '; SameSite=Lax' + secure;
 
     document.cookie = base;
     if (domain) {
       document.cookie = base + '; domain=' + domain;
     }
     if (path !== '/') {
-      document.cookie = name + '=; ' + expires + '; Max-Age=0; path=/; SameSite=Lax';
+      document.cookie = name + '=; ' + expires + '; Max-Age=0; path=/; SameSite=Lax' + secure;
       if (domain) {
-        document.cookie = name + '=; ' + expires + '; Max-Age=0; path=/; SameSite=Lax; domain=' + domain;
+        document.cookie = name + '=; ' + expires + '; Max-Age=0; path=/; SameSite=Lax; domain=' + domain + secure;
       }
     }
   }
@@ -210,7 +211,8 @@
       }
 
       window.fbq('consent', 'grant');
-      if (cfg.metaPixelId) {
+      if (cfg.metaPixelId && !window.__gdprCaMetaPixelInit) {
+        window.__gdprCaMetaPixelInit = true;
         window.fbq('init', cfg.metaPixelId);
         window.fbq('track', 'PageView');
       }
@@ -263,27 +265,26 @@
       var attrs = ph.getAttribute('data-gdpr-ca-attrs');
 
       if (html) {
-        var wrapper = document.createElement('div');
-        wrapper.innerHTML = html;
-        while (wrapper.firstChild) {
-          ph.parentNode.insertBefore(wrapper.firstChild, ph);
+        var frag;
+        if (document.createRange && document.createRange().createContextualFragment) {
+          frag = document.createRange().createContextualFragment(html);
+        } else {
+          var tpl = document.createElement('template');
+          tpl.innerHTML = html;
+          frag = tpl.content;
         }
+        ph.parentNode.insertBefore(frag, ph);
         ph.parentNode.removeChild(ph);
       } else if (src) {
         var iframe = document.createElement('iframe');
         iframe.src = src;
         if (attrs) {
-          var tmp = document.createElement('div');
-          tmp.innerHTML = '<iframe ' + attrs + '>';
-          var probe = tmp.firstChild;
-          if (probe && probe.attributes) {
-            for (var j = 0; j < probe.attributes.length; j++) {
-              var at = probe.attributes[j];
-              if (at.name !== 'src') {
-                iframe.setAttribute(at.name, at.value);
-              }
+          var safeAttrs = ['width', 'height', 'style', 'class', 'id', 'allow', 'frameborder', 'allowfullscreen', 'loading', 'title', 'name', 'referrerpolicy', 'sandbox'];
+          attrs.replace(/(\w+)\s*=\s*"([^"]*)"/g, function (m, name, val) {
+            if (safeAttrs.indexOf(name) !== -1) {
+              iframe.setAttribute(name, val);
             }
-          }
+          });
         }
         ph.parentNode.replaceChild(iframe, ph);
       }
@@ -317,25 +318,26 @@
       var iframe = document.createElement('iframe');
       iframe.src = src;
       if (attrs) {
-        var tmp = document.createElement('div');
-        tmp.innerHTML = '<iframe ' + attrs + '>';
-        var probe = tmp.firstChild;
-        if (probe && probe.attributes) {
-          for (var i = 0; i < probe.attributes.length; i++) {
-            var at = probe.attributes[i];
-            if (at.name !== 'src') { iframe.setAttribute(at.name, at.value); }
+        var safeAttrs = ['width', 'height', 'style', 'class', 'id', 'allow', 'frameborder', 'allowfullscreen', 'loading', 'title', 'name', 'referrerpolicy', 'sandbox'];
+        attrs.replace(/(\w+)\s*=\s*"([^"]*)"/g, function (m, name, val) {
+          if (safeAttrs.indexOf(name) !== -1) {
+            iframe.setAttribute(name, val);
           }
-        }
+        });
       }
       placeholder.parentNode.replaceChild(iframe, placeholder);
     } else {
       var html = placeholder.getAttribute('data-gdpr-ca-html');
       if (html) {
-        var wrapper = document.createElement('div');
-        wrapper.innerHTML = html;
-        while (wrapper.firstChild) {
-          placeholder.parentNode.insertBefore(wrapper.firstChild, placeholder);
+        var frag;
+        if (document.createRange && document.createRange().createContextualFragment) {
+          frag = document.createRange().createContextualFragment(html);
+        } else {
+          var tpl = document.createElement('template');
+          tpl.innerHTML = html;
+          frag = tpl.content;
         }
+        placeholder.parentNode.insertBefore(frag, placeholder);
         placeholder.parentNode.removeChild(placeholder);
       }
     }
@@ -369,11 +371,29 @@
       categories = ['necessary'];
     }
 
+    var $btns = banner ? $all('#gdpr-ca-banner [data-gdpr-ca-action], #gdpr-ca-banner [data-gdpr-ca-toggle]') : [];
+    $btns.forEach(function (b) { b.disabled = true; });
+
+    var errMsg = banner && $('[data-gdpr-ca-error]', banner);
+    if (errMsg) { errMsg.parentNode.removeChild(errMsg); }
+
     postConsent(action, categories, function (err, res) {
+      $btns.forEach(function (b) { b.disabled = false; });
+
       if (err) {
-        console.error('[Auditor GDPR]', err);
+        if (banner) {
+          var oldErr = $('[data-gdpr-ca-error]', banner);
+          if (oldErr) { oldErr.parentNode.removeChild(oldErr); }
+          var p = document.createElement('p');
+          p.setAttribute('data-gdpr-ca-error', '');
+          p.style.cssText = 'color:#c5221f !important;font-size:13px !important;margin:10px 0 0 0 !important;';
+          p.textContent = labels.errorText || 'Error al guardar tu preferencia. Intentalo de nuevo.';
+          var actions = $('.gdpr-ca-banner__actions', banner);
+          if (actions) { actions.parentNode.insertBefore(p, actions.nextSibling); }
+        }
         return;
       }
+
       var active = (res && res.active_categories) || categories;
       pushGcmUpdate(active);
       pushMetaPixelUpdate(active);

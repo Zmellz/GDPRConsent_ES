@@ -69,14 +69,15 @@
 
     $btn.prop('disabled', true).text(GdprCaAdmin.i18n.exporting);
 
-    // Use a hidden iframe to trigger a real file download.
-    var url = GdprCaAdmin.ajaxUrl + '?action=' + encodeURIComponent(action) + '&nonce=' + encodeURIComponent(GdprCaAdmin.nonce);
-    var $iframe = $('<iframe></iframe>').css({ position: 'absolute', top: '-1000px', left: '-1000px', width: '1px', height: '1px' });
-    $iframe.attr('src', url);
-    $body.append($iframe);
+    // Use a hidden POST form to trigger a real file download (avoids nonce in URL).
+    var $form = $('<form></form>').css({ display: 'none' }).attr({ method: 'POST', action: GdprCaAdmin.ajaxUrl });
+    $form.append($('<input>').attr({ type: 'hidden', name: 'action', value: action }));
+    $form.append($('<input>').attr({ type: 'hidden', name: 'nonce', value: GdprCaAdmin.nonce }));
+    $body.append($form);
+    $form.submit();
     setTimeout(function () {
       $btn.prop('disabled', false);
-      $iframe.remove();
+      $form.remove();
     }, 6000);
   });
 

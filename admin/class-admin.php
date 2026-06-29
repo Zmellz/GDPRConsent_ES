@@ -403,7 +403,14 @@ class GdprCa_Admin {
                 // Make settings available in all views.
                 $settings = get_option( GDPR_CA_OPTION_NAME, array() );
                 $data['settings'] = $settings;
-                extract( $data, EXTR_SKIP ); // phpcs:ignore WordPress.PHP.DontExtract.extract_extract -- admin views only.
+                $results      = isset( $data['results'] ) ? $data['results'] : array();
+                $message      = isset( $data['message'] ) ? $data['message'] : '';
+                $warnings     = isset( $data['warnings'] ) ? $data['warnings'] : array();
+                $current_page = isset( $data['current_page'] ) ? $data['current_page'] : 1;
+                $per_page     = isset( $data['per_page'] ) ? $data['per_page'] : 50;
+                $logs         = isset( $data['logs'] ) ? $data['logs'] : array();
+                $total        = isset( $data['total'] ) ? $data['total'] : 0;
+                $total_pages  = isset( $data['total_pages'] ) ? $data['total_pages'] : 1;
                 include $path;
         }
 
@@ -498,7 +505,7 @@ class GdprCa_Admin {
 
                 if ( ! current_user_can( self::CAP ) ) {
                         wp_send_json_error( array( 'message' => __( 'Permisos insuficientes.', 'gdpr-consent-auditor' ) ), 403 );
-                        return;
+                        exit;
                 }
 
                 try {
@@ -515,7 +522,7 @@ class GdprCa_Admin {
                                 ),
                                 500
                         );
-                        return;
+                        exit;
                 }
 
                 gdpr_ca_update_setting( 'last_scan_at', current_time( 'mysql' ) );
@@ -552,6 +559,7 @@ class GdprCa_Admin {
 
                 if ( ! current_user_can( self::CAP ) ) {
                         wp_send_json_error( array( 'message' => __( 'Permisos insuficientes.', 'gdpr-consent-auditor' ) ), 403 );
+                        exit;
                 }
 
                 $report  = new GdprCa_Report_Generator();
@@ -577,6 +585,7 @@ class GdprCa_Admin {
 
                 if ( ! current_user_can( self::CAP ) ) {
                         wp_send_json_error( array( 'message' => __( 'Permisos insuficientes.', 'gdpr-consent-auditor' ) ), 403 );
+                        exit;
                 }
 
                 $report  = new GdprCa_Report_Generator();
@@ -601,6 +610,7 @@ class GdprCa_Admin {
 
                 if ( ! current_user_can( self::CAP ) ) {
                         wp_send_json_error( array( 'message' => __( 'Permisos insuficientes.', 'gdpr-consent-auditor' ) ), 403 );
+                        exit;
                 }
 
                 $report  = new GdprCa_Report_Generator();
@@ -625,6 +635,7 @@ class GdprCa_Admin {
 
                 if ( ! current_user_can( self::CAP ) ) {
                         wp_send_json_error( array( 'message' => __( 'Permisos insuficientes.', 'gdpr-consent-auditor' ) ), 403 );
+                        exit;
                 }
 
                 $manager = new GdprCa_Consent_Manager();

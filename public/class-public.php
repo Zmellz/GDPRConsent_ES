@@ -144,16 +144,17 @@ class GdprCa_Public {
                 $current = $this->consent->get_current_consent();
 
                 $labels = array(
-                        'title'         => gdpr_ca_get_setting( 'banner_title', __( 'Valoramos tu privacidad', 'gdpr-consent-auditor' ) ),
-                        'message'       => gdpr_ca_get_setting( 'banner_message', '' ),
-                        'acceptAll'     => gdpr_ca_get_setting( 'accept_all_label', __( 'Aceptar todo', 'gdpr-consent-auditor' ) ),
-                        'rejectAll'     => gdpr_ca_get_setting( 'reject_all_label', __( 'Rechazar todo', 'gdpr-consent-auditor' ) ),
-                        'configure'     => gdpr_ca_get_setting( 'configure_label', __( 'Configurar', 'gdpr-consent-auditor' ) ),
-                                'save'          => gdpr_ca_get_setting( 'save_label', __( 'Guardar selección', 'gdpr-consent-auditor' ) ),
-                                'policyLabel'   => gdpr_ca_get_setting( 'policy_link_label', __( 'Política de cookies', 'gdpr-consent-auditor' ) ),
+                        'title'         => __( gdpr_ca_get_setting( 'banner_title', 'Valoramos tu privacidad' ), 'gdpr-consent-auditor' ),
+                        'message'       => __( gdpr_ca_get_setting( 'banner_message', '' ), 'gdpr-consent-auditor' ),
+                        'acceptAll'     => __( gdpr_ca_get_setting( 'accept_all_label', 'Aceptar todo' ), 'gdpr-consent-auditor' ),
+                        'rejectAll'     => __( gdpr_ca_get_setting( 'reject_all_label', 'Rechazar todo' ), 'gdpr-consent-auditor' ),
+                        'configure'     => __( gdpr_ca_get_setting( 'configure_label', 'Configurar' ), 'gdpr-consent-auditor' ),
+                        'save'          => __( gdpr_ca_get_setting( 'save_label', 'Guardar selección' ), 'gdpr-consent-auditor' ),
+                        'policyLabel'   => __( gdpr_ca_get_setting( 'policy_link_label', 'Política de cookies' ), 'gdpr-consent-auditor' ),
                                 'categories'    => $this->localized_categories(),
                                 'loadContent'   => __( 'Cargar contenido', 'gdpr-consent-auditor' ),
-                                'revokeConfirm' => __( 'Tus preferencias de consentimiento se han restablecido. Recarga la página para actualizar la experiencia.', 'gdpr-consent-auditor' ),
+                                'revokeConfirm' => esc_html__( 'Tus preferencias de consentimiento se han restablecido. Recarga la página para actualizar la experiencia.', 'gdpr-consent-auditor' ),
+                                'errorText'     => __( 'Error al guardar tu preferencia. Inténtalo de nuevo.', 'gdpr-consent-auditor' ),
                 );
 
                 wp_localize_script(
@@ -245,8 +246,6 @@ class GdprCa_Public {
                 $anal   = gdpr_ca_get_setting( 'gcm_v2_default_analytics', 'denied' );
                 $func   = gdpr_ca_get_setting( 'gcm_v2_default_functional', 'denied' );
                 $pads   = gdpr_ca_get_setting( 'gcm_v2_default_personalized_ads', 'denied' );
-                $url    = gdpr_ca_get_setting( 'gcm_v2_url_passthrough', 'https://example.com/privacy' );
-
                 // If the user has already consented, prefer their stored state.
                 $current = $this->consent->get_current_consent();
                 if ( $current['has_consent'] ) {
@@ -259,7 +258,7 @@ class GdprCa_Public {
 
                 echo '<script>' . "\n";
                 echo 'window.dataLayer = window.dataLayer || [];' . "\n";
-                echo 'function gtag(){dataLayer.push(arguments);}' . "\n";
+                echo 'if (typeof gtag !== "function") { function gtag(){dataLayer.push(arguments);} }' . "\n";
                 echo "gtag('consent', 'default', {" . "\n";
                 echo "  'ad_storage': '" . esc_js( $ads ) . "'," . "\n";
                 echo "  'ad_user_data': '" . esc_js( $ads ) . "'," . "\n";
@@ -683,13 +682,13 @@ class GdprCa_Public {
                         $classes[] = 'gdpr-ca-banner--hidden';
                 }
 
-                $title   = gdpr_ca_get_setting( 'banner_title', '' );
-                $message = gdpr_ca_get_setting( 'banner_message', '' );
-                $accept  = gdpr_ca_get_setting( 'accept_all_label', __( 'Aceptar todo', 'gdpr-consent-auditor' ) );
-                $reject  = gdpr_ca_get_setting( 'reject_all_label', __( 'Rechazar todo', 'gdpr-consent-auditor' ) );
-                $config  = gdpr_ca_get_setting( 'configure_label', __( 'Configurar', 'gdpr-consent-auditor' ) );
-                $save    = gdpr_ca_get_setting( 'save_label', __( 'Guardar selección', 'gdpr-consent-auditor' ) );
-                $policy_label = gdpr_ca_get_setting( 'policy_link_label', __( 'Política de cookies', 'gdpr-consent-auditor' ) );
+                $title   = __( gdpr_ca_get_setting( 'banner_title', 'Valoramos tu privacidad' ), 'gdpr-consent-auditor' );
+                $message = __( gdpr_ca_get_setting( 'banner_message', '' ), 'gdpr-consent-auditor' );
+                $accept  = __( gdpr_ca_get_setting( 'accept_all_label', 'Aceptar todo' ), 'gdpr-consent-auditor' );
+                $reject  = __( gdpr_ca_get_setting( 'reject_all_label', 'Rechazar todo' ), 'gdpr-consent-auditor' );
+                $config  = __( gdpr_ca_get_setting( 'configure_label', 'Configurar' ), 'gdpr-consent-auditor' );
+                $save    = __( gdpr_ca_get_setting( 'save_label', 'Guardar selección' ), 'gdpr-consent-auditor' );
+                $policy_label = __( gdpr_ca_get_setting( 'policy_link_label', 'Política de cookies' ), 'gdpr-consent-auditor' );
                 $policy_url   = $this->policy_url();
 
                 $cats    = $this->localized_categories();
@@ -699,9 +698,9 @@ class GdprCa_Public {
                 ?>
                 <style id="gdpr-ca-banner-theme"><?php echo wp_strip_all_tags( $theme_css ); ?></style>
                 <?php if ( 'modal' === $layout ) : ?>
-                        <div class="gdpr-ca-backdrop<?php echo $hidden ? ' gdpr-ca-banner--hidden' : ''; ?>" data-gdpr-ca-backdrop></div>
+                        <div class="gdpr-ca-backdrop<?php echo esc_attr( $hidden ? ' gdpr-ca-banner--hidden' : '' ); ?>" data-gdpr-ca-backdrop></div>
                 <?php endif; ?>
-                <div id="gdpr-ca-banner" class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>" style="<?php echo esc_attr( $style ); ?>" role="dialog" aria-modal="true" aria-labelledby="gdpr-ca-banner-title" aria-hidden="<?php echo $hidden ? 'true' : 'false'; ?>">
+                <div id="gdpr-ca-banner" class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>" style="<?php echo esc_attr( $style ); ?>" role="dialog" aria-modal="true" aria-labelledby="gdpr-ca-banner-title" aria-hidden="<?php echo esc_attr( $hidden ? 'true' : 'false' ); ?>">
                         <div class="gdpr-ca-banner__inner">
                                 <div class="gdpr-ca-banner__head">
                                         <h2 id="gdpr-ca-banner-title"><?php echo esc_html( $title ); ?></h2>
@@ -728,7 +727,7 @@ class GdprCa_Public {
                                                                         type="checkbox"
                                                                         name="gdpr-ca-cat[]"
                                                                         value="<?php echo esc_attr( $key ); ?>"
-                                                                        <?php echo $cat['always_on'] ? 'checked disabled' : ''; ?>
+                                                                        <?php echo esc_attr( $cat['always_on'] ? 'checked disabled' : '' ); ?>
                                                                         data-gdpr-ca-cat="<?php echo esc_attr( $key ); ?>"
                                                                 />
                                                                 <strong><?php echo esc_html( $cat['label'] ); ?></strong>

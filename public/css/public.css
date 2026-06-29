@@ -66,6 +66,7 @@ body #gdpr-ca-banner * {
 
 /* Bar layout */
 body #gdpr-ca-banner.gdpr-ca-banner--bar {
+  width: var(--gdpr-ca-max-width) !important;
   width: min(var(--gdpr-ca-max-width), calc(100vw - 32px)) !important;
   max-width: var(--gdpr-ca-max-width) !important;
   left: 50% !important;
@@ -90,12 +91,14 @@ body #gdpr-ca-banner.gdpr-ca-banner--modal {
   right: auto !important;
   bottom: auto !important;
   transform: translate(-50%, -50%) !important;
+  width: 680px !important;
   width: min(680px, calc(100vw - 32px)) !important;
   max-width: 680px !important;
 }
 
 /* Widget layout */
 body #gdpr-ca-banner.gdpr-ca-banner--widget {
+  width: 380px !important;
   width: min(380px, calc(100vw - 24px)) !important;
   max-width: 380px !important;
   left: auto !important;
@@ -409,5 +412,13 @@ body .gdpr-ca-iframe-placeholder button:hover {
   body .gdpr-ca-backdrop,
   body #gdpr-ca-banner {
     transition: none !important;
+  }
+}
+
+/* Print: hide banner and backdrop */
+@media print {
+  body #gdpr-ca-banner,
+  body .gdpr-ca-backdrop {
+    display: none !important;
   }
 }

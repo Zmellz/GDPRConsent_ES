@@ -57,14 +57,18 @@ class GdprCa_Script_Blocker {
 				if ( empty( $rule['pattern'] ) || empty( $rule['category'] ) ) {
 					continue;
 				}
-				$pattern = $rule['pattern'];
-				if ( @preg_match( '/' . str_replace( '/', '\/', $pattern ) . '/i', $handle . ' ' . $src ) ) {
-					return sanitize_key( $rule['category'] );
-				}
-				// Plain substring match as a fallback.
-				if ( false !== stripos( $handle . ' ' . $src, $pattern ) ) {
-					return sanitize_key( $rule['category'] );
-				}
+                                $pattern = $rule['pattern'];
+                                // Validate the regex pattern before matching.
+                                $regex = '/' . str_replace( '/', '\/', $pattern ) . '/i';
+                                if ( false !== preg_match( $regex, '' ) || preg_last_error() === PREG_NO_ERROR ) {
+                                        if ( preg_match( $regex, $handle . ' ' . $src ) ) {
+                                                return sanitize_key( $rule['category'] );
+                                        }
+                                }
+                                // Plain substring match as a fallback.
+                                if ( false !== stripos( $handle . ' ' . $src, $pattern ) ) {
+                                        return sanitize_key( $rule['category'] );
+                                }
 			}
 		}
 

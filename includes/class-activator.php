@@ -61,13 +61,13 @@ class GdprCa_Activator {
                         'banner_enabled'             => 1,
                         'banner_position'            => 'bottom',
                         'banner_layout'              => 'bar',
-                        'banner_title'               => __( 'Valoramos tu privacidad', 'gdpr-consent-auditor' ),
-                        'banner_message'             => __( 'Usamos cookies y tecnologías similares para mejorar tu experiencia de navegación, ofrecer contenido o anuncios personalizados y analizar nuestro tráfico. Al hacer clic en "Aceptar todo", consientes el uso de cookies.', 'gdpr-consent-auditor' ),
-                        'accept_all_label'           => __( 'Aceptar todo', 'gdpr-consent-auditor' ),
-                        'reject_all_label'           => __( 'Rechazar todo', 'gdpr-consent-auditor' ),
-                        'configure_label'            => __( 'Configurar', 'gdpr-consent-auditor' ),
-                        'save_label'                 => __( 'Guardar selección', 'gdpr-consent-auditor' ),
-                        'policy_link_label'          => __( 'Política de cookies', 'gdpr-consent-auditor' ),
+                        'banner_title'               => 'Valoramos tu privacidad',
+                        'banner_message'             => 'Usamos cookies y tecnologías similares para mejorar tu experiencia de navegación, ofrecer contenido o anuncios personalizados y analizar nuestro tráfico. Al hacer clic en "Aceptar todo", consientes el uso de cookies.',
+                        'accept_all_label'           => 'Aceptar todo',
+                        'reject_all_label'           => 'Rechazar todo',
+                        'configure_label'            => 'Configurar',
+                        'save_label'                 => 'Guardar selección',
+                        'policy_link_label'          => 'Política de cookies',
                         'policy_page_id'             => 0,
                         'primary_color'              => '#1a73e8',
                         'accent_color'               => '#202124',
@@ -82,23 +82,23 @@ class GdprCa_Activator {
                         // Categories (always-on vs opt-in).
                         'categories'                 => array(
                                 'necessary'     => array(
-                                        'label'       => __( 'Necesarias', 'gdpr-consent-auditor' ),
-                                        'description' => __( 'Necesarias para que el sitio web funcione. No se pueden desactivar.', 'gdpr-consent-auditor' ),
+                                        'label'       => 'Necesarias',
+                                        'description' => 'Necesarias para que el sitio web funcione. No se pueden desactivar.',
                                         'always_on'   => 1,
                                 ),
                                 'preferences'   => array(
-                                        'label'       => __( 'Preferencias', 'gdpr-consent-auditor' ),
-                                        'description' => __( 'Recuerdan tus elecciones (idioma, región) para ofrecer una experiencia más fluida.', 'gdpr-consent-auditor' ),
+                                        'label'       => 'Preferencias',
+                                        'description' => 'Recuerdan tus elecciones (idioma, región) para ofrecer una experiencia más fluida.',
                                         'always_on'   => 0,
                                 ),
                                 'statistics'    => array(
-                                        'label'       => __( 'Estadísticas', 'gdpr-consent-auditor' ),
-                                        'description' => __( 'Miden de forma anónima cómo se usa la web para poder mejorarla.', 'gdpr-consent-auditor' ),
+                                        'label'       => 'Estadísticas',
+                                        'description' => 'Miden de forma anónima cómo se usa la web para poder mejorarla.',
                                         'always_on'   => 0,
                                 ),
                                 'marketing'     => array(
-                                        'label'       => __( 'Marketing', 'gdpr-consent-auditor' ),
-                                        'description' => __( 'Se usan para mostrar anuncios relevantes y medir el rendimiento de las campañas publicitarias.', 'gdpr-consent-auditor' ),
+                                        'label'       => 'Marketing',
+                                        'description' => 'Se usan para mostrar anuncios relevantes y medir el rendimiento de las campañas publicitarias.',
                                         'always_on'   => 0,
                                 ),
                         ),
@@ -146,7 +146,7 @@ class GdprCa_Activator {
          *
          * @return void
          */
-        private static function create_consent_table() {
+        public static function create_consent_table() {
                 global $wpdb;
                 require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 

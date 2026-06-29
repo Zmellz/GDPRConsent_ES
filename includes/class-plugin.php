@@ -122,6 +122,7 @@ class GdprCa_Plugin {
 
 		$action     = $request->get_param( 'action' );
 		$categories = $request->get_param( 'categories' );
+		$categories = is_array( $categories ) ? $categories : array();
 
 		$manager = new GdprCa_Consent_Manager();
 		$ok      = $manager->record_consent( $action, $categories );

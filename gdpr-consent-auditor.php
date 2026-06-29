@@ -98,3 +98,26 @@ function gdpr_ca_boot() {
         new GdprCa_Public();
 }
 add_action( 'plugins_loaded', 'gdpr_ca_boot' );
+
+/**
+ * Run DB upgrade routines when the plugin version changes.
+ *
+ * @return void
+ */
+function gdpr_ca_run_db_upgrade() {
+        $current_ver = get_option( 'gdpr_ca_db_version', '0.0.0' );
+
+        if ( version_compare( $current_ver, GDPR_CA_DB_VERSION, '>=' ) ) {
+                return;
+        }
+
+        // v1.0.0 — initial schema (already exists on fresh install).
+        if ( version_compare( $current_ver, '1.0.0', '<' ) ) {
+                GdprCa_Activator::create_consent_table();
+        }
+
+        // Future migrations go here as elseif blocks.
+
+        update_option( 'gdpr_ca_db_version', GDPR_CA_DB_VERSION );
+}
+add_action( 'plugins_loaded', 'gdpr_ca_run_db_upgrade' );

@@ -2,6 +2,10 @@
 /**
  * Uninstaller: runs when the user clicks "Delete" on the Plugins screen.
  *
+ * During uninstall, WordPress includes this file directly WITHOUT loading
+ * the plugin, so plugin constants (GDPR_CA_OPTION_NAME etc.) are NOT
+ * available. Define them inline or use raw strings.
+ *
  * @package GdprConsentAuditor
  */
 
@@ -9,41 +13,25 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-/**
- * Class GdprCa_Uninstaller
- *
- * Removes all plugin data: options, transients, the consent log table,
- * and scheduled events. Cookie data in the user's browser cannot be
- * removed server-side; we rely on cookie expiration.
- */
-class GdprCa_Uninstaller {
+global $wpdb;
 
-	/**
-	 * Run uninstallation.
-	 *
-	 * @return void
-	 */
-	public static function uninstall() {
-		global $wpdb;
+// Define option keys inline (plugin is not loaded during uninstall).
+$option_name = 'gdpr_ca_settings';
+$consent_version_option = 'gdpr_ca_consent_version';
 
-		// Remove options.
-		delete_option( GDPR_CA_OPTION_NAME );
-		delete_option( GDPR_CA_CONSENT_VERSION_OPTION );
-		delete_option( 'gdpr_ca_db_version' );
-		delete_transient( 'gdpr_ca_scan_results' );
+// Remove options.
+delete_option( $option_name );
+delete_option( $consent_version_option );
+delete_option( 'gdpr_ca_db_version' );
+delete_transient( 'gdpr_ca_scan_results' );
 
-		// Remove consent log table.
-		$table_name = $wpdb->prefix . 'gdpr_ca_consents';
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is hardcoded internally.
-		$wpdb->query( "DROP TABLE IF EXISTS {$table_name}" );
+// Remove consent log table.
+$table_name = $wpdb->prefix . 'gdpr_ca_consents';
+// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name is hardcoded internally.
+$wpdb->query( "DROP TABLE IF EXISTS {$table_name}" );
 
-		// Clear scheduled events.
-		wp_clear_scheduled_hook( 'gdpr_ca_daily_scan' );
+// Clear scheduled events.
+wp_clear_scheduled_hook( 'gdpr_ca_daily_scan' );
 
-		// Flush rewrite rules.
-		flush_rewrite_rules();
-	}
-}
-
-// Hook into WP's uninstall mechanism.
-register_uninstall_hook( __FILE__, array( 'GdprCa_Uninstaller', 'uninstall' ) );
+// Flush rewrite rules.
+flush_rewrite_rules();
