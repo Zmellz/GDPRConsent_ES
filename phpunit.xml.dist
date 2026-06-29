@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+    bootstrap="tests/phpunit/bootstrap.php"
+    backupGlobals="false"
+    backupStaticAttributes="false"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    convertDeprecationsToExceptions="true"
+    failOnRisky="true"
+    failOnWarning="true"
+    stopOnFailure="false"
+    executionOrder="random"
+    forceCoversAnnotation="false"
+    beStrictAboutOutputDuringTests="true"
+    verbose="true"
+    testdox="true">
+
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>tests/phpunit/unit</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory>tests/phpunit/integration</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage cacheDirectory="coverage/.cache">
+        <include>
+            <directory suffix=".php">includes</directory>
+            <directory suffix=".php">admin</directory>
+            <directory suffix=".php">public</directory>
+        </include>
+    </coverage>
+
+    <php>
+        <!-- Bootstrap constants so the plugin's main file loads correctly
+             in a non-WordPress test environment. -->
+        <env name="GDPR_CA_TEST_MODE" value="1"/>
+    </php>
+</phpunit>

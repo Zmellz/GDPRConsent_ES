@@ -1,0 +1,304 @@
+/* GDPR Consent Auditor — admin styles */
+
+.gdpr-ca-wrap { max-width: 1200px; }
+
+.gdpr-ca-wrap h1 { display: flex; align-items: center; gap: .4em; }
+.gdpr-ca-wrap h1:before {
+  content: "\f334";
+  font-family: dashicons;
+  font-size: 26px;
+  color: #1a73e8;
+}
+
+.gdpr-ca-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.gdpr-ca-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-left: 4px solid #1a73e8;
+  border-radius: 6px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.gdpr-ca-card-label {
+  color: #5f6368;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.gdpr-ca-card-value {
+  font-size: 28px;
+  font-weight: 600;
+  color: #202124;
+}
+
+.gdpr-ca-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+.gdpr-ca-actions .button .dashicons {
+  vertical-align: middle;
+  margin-right: 4px;
+}
+.gdpr-ca-last-scan {
+  color: #5f6368;
+  font-style: italic;
+}
+
+.gdpr-ca-report-wrap {
+  margin-top: 24px;
+}
+.gdpr-ca-report-disclaimer {
+  background: #fff8e5;
+  border: 1px solid #f0c040;
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin: 10px 0 18px 0;
+  color: #5b4a16;
+}
+
+.gdpr-ca-table { table-layout: auto; }
+.gdpr-ca-table th, .gdpr-ca-table td {
+  vertical-align: top;
+  word-break: break-word;
+}
+.gdpr-ca-muted { color: #5f6368; font-size: 12px; }
+.gdpr-ca-tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  margin-left: 4px;
+  background: #e8eaed;
+  color: #3c4043;
+}
+.gdpr-ca-tag-inactive { background: #f3f4f6; color: #6b7280; }
+.gdpr-ca-tag-service { background: #fce8e6; color: #c5221f; }
+
+.gdpr-ca-risk {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.gdpr-ca-risk-low    { background: #e6f4ea; color: #1e7e34; }
+.gdpr-ca-risk-medium { background: #fff3cd; color: #856404; }
+.gdpr-ca-risk-high   { background: #fce8e6; color: #c5221f; }
+
+.gdpr-ca-categories-table { table-layout: fixed; }
+.gdpr-ca-categories-table th:nth-child(1) { width: 12%; }
+.gdpr-ca-categories-table th:nth-child(2) { width: 22%; }
+.gdpr-ca-categories-table th:nth-child(4) { width: 16%; }
+
+.gdpr-ca-legal-textarea {
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-size: 13px;
+}
+.gdpr-ca-legal-disclaimer {
+  background: #fff8e5;
+  border-left: 4px solid #f0c040;
+  padding: 8px 12px;
+  margin: 8px 0 18px 0;
+  color: #5b4a16;
+}
+
+.gdpr-ca-color {
+  width: 74px;
+  height: 30px;
+  padding: 1px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ===== Settings cards ===== */
+.gdpr-ca-settings-card {
+  background: #fff;
+  border: 1px solid #dcdcde;
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin-bottom: 18px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.gdpr-ca-settings-card h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1d2327;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.gdpr-ca-settings-card h2 .dashicons {
+  color: #1a73e8;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* ===== Field groups (row of inline controls) ===== */
+.gdpr-ca-field-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+  align-items: flex-end;
+}
+.gdpr-ca-field-row + .gdpr-ca-field-row {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #f0f0f1;
+}
+.gdpr-ca-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 120px;
+}
+.gdpr-ca-field label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #3c434a;
+}
+.gdpr-ca-field input[type="number"],
+.gdpr-ca-field input[type="text"],
+.gdpr-ca-field select {
+  width: 100%;
+  min-width: 80px;
+}
+.gdpr-ca-field textarea {
+  width: 100%;
+}
+
+/* ===== 2-column color grid ===== */
+.gdpr-ca-color-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 28px;
+}
+@media (max-width: 900px) {
+  .gdpr-ca-color-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.gdpr-ca-color-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  min-width: 0;
+}
+.gdpr-ca-color-label {
+  flex-shrink: 0;
+  font-size: 13px;
+  color: #1d2327;
+  min-width: 88px;
+}
+.gdpr-ca-opacity-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.gdpr-ca-opacity-wrap input[type="range"] {
+  flex: 1;
+  min-width: 50px;
+  max-width: 100px;
+  height: 16px;
+  margin: 0;
+  vertical-align: middle;
+}
+.gdpr-ca-opacity-val {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: #646970;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ===== Padding quad ===== */
+.gdpr-ca-padding-grid {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.gdpr-ca-padding-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.gdpr-ca-padding-item label {
+  font-size: 10px;
+  color: #646970;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.gdpr-ca-padding-item input[type="number"] {
+  width: 60px;
+  text-align: center;
+}
+.gdpr-ca-padding-item input[type="number"]::-webkit-inner-spin-button {
+  opacity: 1;
+}
+
+/* ===== Category table inside settings ===== */
+.gdpr-ca-cat-settings-table { width: 100%; border-spacing: 0; }
+.gdpr-ca-cat-settings-table th,
+.gdpr-ca-cat-settings-table td {
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid #f0f0f1;
+  font-size: 13px;
+}
+.gdpr-ca-cat-settings-table th {
+  font-weight: 500;
+  color: #3c434a;
+}
+.gdpr-ca-cat-settings-table td:last-child {
+  white-space: nowrap;
+}
+
+/* ===== Scan results ===== */
+.gdpr-ca-scan-section {
+  margin-bottom: 28px;
+}
+.gdpr-ca-scan-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1d2327;
+  margin: 0 0 12px 0;
+}
+.gdpr-ca-scan-section h3 .count-badge {
+  display: inline-block;
+  background: #f0f0f1;
+  border-radius: 12px;
+  padding: 1px 10px;
+  font-size: 11px;
+  font-weight: 400;
+  color: #646970;
+}
+
+.tablenav { display: flex; align-items: center; gap: 8px; }
+
+.gdpr-ca-scan-status { margin: 8px 0 0; color: #1d2327; min-height: 20px; }
+.gdpr-ca-scan-status.is-error { color: #b32d2e; font-weight: 600; }
