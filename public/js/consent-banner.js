@@ -293,20 +293,18 @@
   /* ---------------------------------------------------------------
    * Event handlers.
    * ------------------------------------------------------------- */
-  if (banner) {
-    banner.addEventListener('click', function (e) {
-      var btn = e.target.closest('[data-gdpr-ca-action]');
-      if (btn) {
-        var action = btn.getAttribute('data-gdpr-ca-action');
-        handleAction(action);
-        return;
-      }
-      var toggle = e.target.closest('[data-gdpr-ca-toggle]');
-      if (toggle) {
-        togglePreferences();
-      }
-    });
-  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('#gdpr-ca-banner [data-gdpr-ca-action]');
+    if (btn) {
+      var action = btn.getAttribute('data-gdpr-ca-action');
+      handleAction(action);
+      return;
+    }
+    var toggle = e.target.closest('#gdpr-ca-banner [data-gdpr-ca-toggle]');
+    if (toggle) {
+      togglePreferences();
+    }
+  });
 
   document.addEventListener('click', function (e) {
     var loadBtn = e.target.closest('[data-gdpr-ca-load]');
@@ -387,7 +385,7 @@
   /* ---------------------------------------------------------------
    * Initial state.
    * ------------------------------------------------------------- */
-  if (banner && cfg.hasConsent && cfg.currentCategories && cfg.currentCategories.length) {
+  if (cfg.hasConsent && cfg.currentCategories && cfg.currentCategories.length) {
     document.addEventListener('DOMContentLoaded', function () {
       pushGcmUpdate(cfg.currentCategories);
       pushMetaPixelUpdate(cfg.currentCategories);
